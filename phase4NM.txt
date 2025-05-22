@@ -1,0 +1,39 @@
+from sklearn.tree import DecisionTreeClassifier
+import pandas as pd
+
+# Sample data
+data = {
+    'Fever': [1, 0, 1, 1, 0],
+    'Cough': [1, 1, 0, 1, 0],
+    'Headache': [1, 0, 0, 0, 1],
+    'Fatigue': [1, 1, 0, 1, 0],
+    'Diagnosis': ['Flu', 'Cold', 'Migraine', 'COVID-19', 'Cold']
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+X = df[['Fever', 'Cough', 'Headache', 'Fatigue']]
+y = df['Diagnosis']
+
+# Train model
+model = DecisionTreeClassifier()
+model.fit(X, y)
+
+# Function to diagnose and recommend treatment
+def diagnose_and_treat(symptoms):
+    input_data = pd.DataFrame([symptoms], columns=X.columns)
+    diagnosis = model.predict(input_data)[0]
+
+    treatments = {
+        'Flu': 'Rest, fluids, and antiviral medications.',
+        'Cold': 'Rest, decongestants, and hydration.',
+        'Migraine': 'Pain relievers, rest in a dark room.',
+        'COVID-19': 'Isolate, monitor oxygen levels, seek medical help if severe.'
+    }
+
+    print(f"Predicted Diagnosis: {diagnosis}")
+    print(f"Recommended Treatment: {treatments.get(diagnosis, 'Consult a doctor.')}")
+
+# Example symptoms: [Fever, Cough, Headache, Fatigue]
+new_symptoms = [1, 1, 0, 1]
+diagnose_and_treat(new_symptoms)

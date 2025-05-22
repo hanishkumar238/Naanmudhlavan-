@@ -1,0 +1,45 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+
+# Sample dataset
+data = {
+    'fever': [1, 1, 0, 0],
+    'cough': [1, 1, 0, 0],
+    'headache': [1, 0, 1, 0],
+    'fatigue': [1, 0, 1, 0],
+    'disease': ['Flu', 'Cold', 'Migraine', 'Healthy']
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Features and target
+X = df.drop('disease', axis=1)
+y = df['disease']
+
+# Model training
+model = DecisionTreeClassifier()
+model.fit(X, y)
+
+# Treatment mapping
+treatment = {
+    'Flu': 'Rest, fluids, and antiviral drugs',
+    'Cold': 'Rest and decongestants',
+    'Migraine': 'Pain relief and rest in a dark room',
+    'Healthy': 'No treatment needed'
+}
+
+# Function to get symptoms from user
+def get_symptom_input():
+    print("Enter symptom presence (1 for Yes, 0 for No):")
+    fever = int(input("Fever: "))
+    cough = int(input("Cough: "))
+    headache = int(input("Headache: "))
+    fatigue = int(input("Fatigue: "))
+    return [[fever, cough, headache, fatigue]]
+
+# Get user input and predict
+symptoms = get_symptom_input()
+prediction = model.predict(symptoms)[0]
+print(f"Diagnosis: {prediction}")
+print(f"Recommended Treatment: {treatment[prediction]}")

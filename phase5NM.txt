@@ -1,0 +1,17 @@
+# Simple Healthcare Diagnosis Program
+
+# Ask user for symptoms
+symptoms = input("Enter your symptoms (comma separated): ").lower().split(",")
+
+# Clean the input
+symptoms = [s.strip() for s in symptoms]
+
+# Simple diagnostic rules
+if "fever" in symptoms and "cough" in symptoms:
+    print("You might have the flu. Recommended: rest, fluids, see a doctor.")
+elif "headache" in symptoms and "nausea" in symptoms:
+    print("You might have a migraine. Recommended: rest in a dark room, stay hydrated.")
+elif "sore throat" in symptoms and "sneezing" in symptoms:
+    print("You might have a cold. Recommended: rest, warm fluids, cold medicine.")
+else:
+    print("No clear diagnosis. Please consult a healthcare provider.")
